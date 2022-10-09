@@ -16,7 +16,7 @@ const initialState: productState = {
 };
 
 export const productSlicer = createSlice({
-  name: "user",
+  name: "product",
   initialState,
   reducers: {}
 });

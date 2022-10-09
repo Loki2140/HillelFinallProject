@@ -1,6 +1,5 @@
 import { IProduct } from "../../models/IProduct";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 interface productState {
   products: IProduct[];
   isLoading: boolean;
@@ -13,20 +12,15 @@ const initialState: productState = {
   error: ""
 };
 
-export const comparisonSlicer = createSlice({
-  name: "user",
+export const productCartSlicer = createSlice({
+  name: "productCart",
   initialState,
   reducers: {
     removeFromCart(state, action: PayloadAction<number>) {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
-    },
-    addToCart(state, action: PayloadAction<number>) {
-      state.products = state.products.filter(
-        (product) => product.id !== action.payload
-      );
     }
   }
 });
-export default comparisonSlicer.reducer;
+export default productCartSlicer.reducer;

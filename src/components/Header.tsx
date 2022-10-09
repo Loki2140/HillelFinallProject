@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, MouseEvent } from "react";
 import {
   Container,
   AppBar,
@@ -19,7 +19,7 @@ import {
   FavoriteBorderRounded,
   Search
 } from "@mui/icons-material";
-import Navigation from "./Navigation";
+import Navigation from "./NavigationHeader";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,12 +75,12 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 export default function Header() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const menuHandlerOpen = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const menuHandlerClose = () => {
     setAnchorEl(null);
   };
 
@@ -102,21 +102,23 @@ export default function Header() {
             <Button
               color="inherit"
               id="demo-positioned-button"
-              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-controls={
+                menuHandlerOpen ? "demo-positioned-menu" : undefined
+              }
               aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
+              aria-expanded={menuHandlerOpen ? "true" : undefined}
               onClick={handleClick}
             >
               Каталог товаров
             </Button>
             <Menu
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
+              id="pos"
+              aria-labelledby="pos_button"
               anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
+              open={menuHandlerOpen}
+              onClose={menuHandlerClose}
               anchorOrigin={{
-                vertical: "top",
+                vertical: "bottom",
                 horizontal: "left"
               }}
               transformOrigin={{
