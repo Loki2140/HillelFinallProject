@@ -1,23 +1,25 @@
-import { IProduct } from "../../models/IProduct";
+import { IProduct } from "./../../models/IProduct";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IProductCollection } from "../../models/IProductCollection";
 
-interface productState {
-  products: IProduct[];
-  isLoading: boolean;
-  error: string;
-  count: number;
-}
-
-const initialState: productState = {
+const initialState: IProductCollection = {
   products: [],
   isLoading: false,
-  error: "",
-  count: 0
+  error: ""
 };
 
-export const productSlicer = createSlice({
-  name: "product",
+export const ProductSlicer = createSlice({
+  name: "productCart",
   initialState,
-  reducers: {}
+  reducers: {
+    removeFromCart(state, action: PayloadAction<number>) {
+      state.products = state.products.filter(
+        (product) => product.id !== action.payload
+      );
+    },
+    addToCart(state, action: PayloadAction<IProduct>) {
+      state.products.push(action.payload);
+    }
+  }
 });
-export default productSlicer.reducer;
+export default ProductSlicer.reducer;

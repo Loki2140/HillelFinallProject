@@ -1,31 +1,24 @@
-import { IProduct } from "../../models/IProduct";
+import { IProduct } from "./../../models/IProduct";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IProductCollection } from "../../models/IProductCollection";
 
-interface productState {
-  products: IProduct[];
-  isLoading: boolean;
-  error: string;
-}
-
-const initialState: productState = {
+const initialState: IProductCollection = {
   products: [],
   isLoading: false,
   error: ""
 };
 
 export const comparisonSlicer = createSlice({
-  name: "user",
+  name: "productCart",
   initialState,
   reducers: {
-    removeFromComparison(state, action: PayloadAction<number>) {
+    removeFromCart(state, action: PayloadAction<number>) {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
     },
-    addToComparison(state, action: PayloadAction<number>) {
-      state.products = state.products.filter(
-        (product) => product.id !== action.payload
-      );
+    addToCart(state, action: PayloadAction<IProduct>) {
+      state.products.push(action.payload);
     }
   }
 });

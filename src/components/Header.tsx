@@ -85,7 +85,7 @@ export default function Header() {
   };
 
   return (
-    <StyledAppBar position="static">
+    <StyledAppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar>
           <Typography
@@ -101,10 +101,8 @@ export default function Header() {
           >
             <Button
               color="inherit"
-              id="demo-positioned-button"
-              aria-controls={
-                menuHandlerOpen ? "demo-positioned-menu" : undefined
-              }
+              id="positioned-button"
+              aria-controls={menuHandlerOpen ? "positioned-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={menuHandlerOpen ? "true" : undefined}
               onClick={handleClick}

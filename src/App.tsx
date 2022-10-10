@@ -12,16 +12,15 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import ProductList from "./components/ProductList";
 import { Padding } from "@mui/icons-material";
+import ProductCart from "./pages/ProductCart";
 
 export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={themeComfy}>
         <Header></Header>
-        <Container sx={{ Padding: "20px" }} maxWidth="xl">
-          <NavigationHeader></NavigationHeader>
-        </Container>
         <ProductList></ProductList>
+        <ProductCart></ProductCart>
       </ThemeProvider>
     </Provider>
   );

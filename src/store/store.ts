@@ -1,4 +1,4 @@
-import { mocApi } from "../Api/mocapi.api";
+import { mocApi } from "../Api/rtq.api";
 import {
   combineReducers,
   configureStore,

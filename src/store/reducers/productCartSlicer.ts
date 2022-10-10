@@ -1,12 +1,8 @@
-import { IProduct } from "../../models/IProduct";
+import { IProduct } from "./../../models/IProduct";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-interface productState {
-  products: IProduct[];
-  isLoading: boolean;
-  error: string;
-}
+import { IProductCollection } from "../../models/IProductCollection";
 
-const initialState: productState = {
+const initialState: IProductCollection = {
   products: [],
   isLoading: false,
   error: ""
@@ -20,6 +16,9 @@ export const productCartSlicer = createSlice({
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
+    },
+    addToCart(state, action: PayloadAction<IProduct>) {
+      state.products.push(action.payload);
     }
   }
 });
