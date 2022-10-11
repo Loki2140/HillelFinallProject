@@ -1,21 +1,25 @@
-import { mocApi } from "../Api/rtq.api";
+import comparisonReducer from "./reducers/comparisonSlicer";
+import productCartReducer from "./reducers/productCartSlicer";
+import productReducer from "./reducers/productSlicer";
+import { rtqApi } from "../api/rtq.api";
 import {
   combineReducers,
   configureStore,
   getDefaultMiddleware
 } from "@reduxjs/toolkit";
-import userReducer from "./reducers/UserSlicer";
 
 const rootReducer = combineReducers({
-  userReducer,
-  [mocApi.reducerPath]: mocApi.reducer
+  comparisonReducer,
+  productCartReducer,
+  productReducer,
+  [rtqApi.reducerPath]: rtqApi.reducer
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(mocApi.middleware)
+      getDefaultMiddleware().concat(rtqApi.middleware)
   });
 };
 export const store = setupStore();

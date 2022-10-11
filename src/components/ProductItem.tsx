@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import {
+  alpha,
   Box,
   Button,
   Card,
@@ -8,10 +9,27 @@ import {
   CardMedia,
   Grid,
   IconButton,
+  Rating,
+  styled,
   Typography
 } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { FavoriteBorderRounded } from "@mui/icons-material";
 import { IProduct } from "../models/IProduct";
+import { productCartSlicer } from "../store/reducers/productCartSlicer";
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.primary.light,
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.primary.light, 0.3)
+  }
+}));
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.primary.light,
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.primary.light, 0.3)
+  }
+}));
 
 export default function ProductItem({
   id,
@@ -22,6 +40,23 @@ export default function ProductItem({
   price,
   title
 }: IProduct) {
+  const { addToCart } = productCartSlicer.actions;
+  const dispatch = useAppDispatch();
+
+  const handelerOnClick = () => {
+    return dispatch(
+      addToCart({
+        id,
+        category,
+        description,
+        rating,
+        image,
+        price,
+        title
+      })
+    );
+  };
+
   return (
     <Grid item xs={12} sm={6} md={6} xl={4}>
       <Card data-id={id} sx={{ minHeight: "500px" }}>
@@ -35,17 +70,30 @@ export default function ProductItem({
           </Typography>
           <Typography marginTop="5px" variant="h4" color="text.secondary">
             {price}$
+            <Rating
+              size="small"
+              name="half-rating"
+              readOnly
+              defaultValue={rating.rate}
+              precision={0.5}
+            />
           </Typography>
-          <Button size="small">Подробнее...</Button>
+
+          <StyledButton size="small">Подробнее...</StyledButton>
         </CardContent>
         <CardActions>
-          <IconButton color="primary" aria-label="add to favorite">
+          <StyledIconButton aria-label="add to favorite">
             <FavoriteBorderRounded />
-          </IconButton>
-          <Button color="primary" variant="outlined" size="large">
+          </StyledIconButton>
+          <StyledButton
+            sx={{ border: `1px solid #69B12A` }}
+            variant="outlined"
+            size="large"
+            onClick={handelerOnClick()}
+          >
             Добавить в корзину
-          </Button>
-          <Button size="small">Добавить в сравнение</Button>
+          </StyledButton>
+          <StyledButton size="small">Добавить в сравнение</StyledButton>
         </CardActions>
       </Card>
     </Grid>

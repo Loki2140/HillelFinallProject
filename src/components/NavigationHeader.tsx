@@ -1,10 +1,15 @@
 import React, { FC, MouseEvent } from "react";
 import { MenuItem, Paper, MenuList, Box } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { productSlicer } from "../store/reducers/productSlicer";
 
 export default function NavigationHeader() {
+  const { changeMenuPage } = productSlicer.actions;
+  const dispatch = useAppDispatch();
+
   const handelerOnClick = (e: MouseEvent<HTMLUListElement>) => {
-    const { category } = (e.target as HTMLUListElement).dataset;
-  
+    const { category = "electronics" } = (e.target as HTMLUListElement).dataset;
+    dispatch(changeMenuPage(category));
   };
 
   return (

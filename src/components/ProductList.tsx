@@ -1,19 +1,21 @@
 import { Container, Grid } from "@mui/material";
-import React, { FC, ReactElement, ReactNode } from "react";
-import {
-  useFetchProductsQuery,
-  useFetchProductsCategoryQuery
-} from "../Api/rtq.api";
+import React, { FC, ReactElement, ReactNode, useEffect } from "react";
+import { useFetchProductsCategoryQuery } from "../api/rtq.api";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { IProduct } from "../models/IProduct";
 import ProductItem from "./ProductItem";
 
 export default function ProductList() {
-  const { isLoading, data, isError } =
-    useFetchProductsCategoryQuery("electronics");
-  // const { isLoading, data, isError } = useFetchProductsQuery("");
-  if (isLoading) return <div>Loading...</div>;
+  const { menuPage = "electronics" } = useAppSelector(
+    (state) => state.productReducer
+  );
+  const { isLoading, data, isError, error } =
+    useFetchProductsCategoryQuery(menuPage);
+
   return (
     <Container maxWidth="xl" sx={{ marginTop: "20px" }}>
+      {isError && <div>Ошибка! В листе!</div>}
+      {isLoading && <div>Loading...</div>}
       <Grid container spacing={5}>
         {data?.map((product: IProduct) => (
           <ProductItem

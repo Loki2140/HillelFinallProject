@@ -1,4 +1,9 @@
-import React, { useState, MouseEvent } from "react";
+import React, {
+  useState,
+  MouseEvent,
+  useEffect,
+  ChangeEventHandler
+} from "react";
 import {
   Container,
   AppBar,
@@ -10,8 +15,7 @@ import {
   InputBase,
   Divider,
   Button,
-  Menu,
-  MenuItem
+  Menu
 } from "@mui/material";
 import {
   ShoppingBasket,
@@ -20,6 +24,7 @@ import {
   Search
 } from "@mui/icons-material";
 import Navigation from "./NavigationHeader";
+import { useDebounce } from "../hooks/debounce";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -48,7 +53,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: "white",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -71,17 +76,23 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
 }));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.primary
+  backgroundColor: theme.palette.primary.main
 }));
 
 export default function Header() {
+  const [search, setSearch] = useState("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuHandlerOpen = Boolean(anchorEl);
+  const debounced = useDebounce(search);
+
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const menuHandlerClose = () => {
     setAnchorEl(null);
+  };
+  const hendlerOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearch(e.target.value);
   };
 
   return (
@@ -100,7 +111,7 @@ export default function Header() {
             }}
           >
             <Button
-              color="inherit"
+              sx={{ color: "white" }}
               id="positioned-button"
               aria-controls={menuHandlerOpen ? "positioned-menu" : undefined}
               aria-haspopup="true"
@@ -127,8 +138,8 @@ export default function Header() {
               <Navigation />
             </Menu>
           </Typography>
-          <SearchInput sx={{ flexGrow: 1 }}>
-            <SearchIconWrapper>
+          <SearchInput sx={{ flexGrow: 1 }} onChange={hendlerOnChange}>
+            <SearchIconWrapper sx={{ color: "white" }}>
               <Search />
             </SearchIconWrapper>
             <StyledInputBase
@@ -137,15 +148,15 @@ export default function Header() {
               sx={{ width: "100%" }}
             />
           </SearchInput>
-          <IconButton color="inherit">
+          <IconButton sx={{ color: "white" }}>
             <SyncAltRounded></SyncAltRounded>
           </IconButton>
           <StyledDivider orientation="vertical" variant="middle" flexItem />
-          <IconButton color="inherit">
+          <IconButton sx={{ color: "white" }}>
             <FavoriteBorderRounded></FavoriteBorderRounded>
           </IconButton>
           <StyledDivider orientation="vertical" variant="middle" flexItem />
-          <IconButton color="inherit">
+          <IconButton sx={{ color: "white" }}>
             <ShoppingBasket>Корзина</ShoppingBasket>
           </IconButton>
         </Toolbar>
