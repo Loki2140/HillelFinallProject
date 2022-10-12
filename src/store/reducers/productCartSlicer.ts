@@ -18,16 +18,25 @@ export const productCartSlicer = createSlice({
   name: "productCart",
   initialState,
   reducers: {
+    removeAllFromCart(state, action: PayloadAction<number>) {
+      state.products = state.products.filter(
+        (product) => product.id !== action.payload
+      );
+      state.tottalSum = calcTotalPrice(state.products);
+      localStorage.setItem("cartItems", JSON.stringify(state.products));
+      localStorage.setItem("cartTottalSum", JSON.stringify(state.tottalSum));
+    },
     removeFromCart(state, action: PayloadAction<number>) {
       const findProduct = state.products.find(
         (product) => product.id === action.payload
       );
-      if (findProduct) {
+      if (findProduct && findProduct.inCart > 1) {
         findProduct.inCart--;
+      } else {
+        state.products = state.products.filter(
+          (product) => product.id !== action.payload
+        );
       }
-      state.products = state.products.filter(
-        (product) => product.id !== action.payload
-      );
       state.tottalSum = calcTotalPrice(state.products);
       localStorage.setItem("cartItems", JSON.stringify(state.products));
       localStorage.setItem("cartTottalSum", JSON.stringify(state.tottalSum));

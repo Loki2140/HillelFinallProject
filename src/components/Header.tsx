@@ -15,7 +15,8 @@ import {
   InputBase,
   Divider,
   Button,
-  Menu
+  Menu,
+  Badge
 } from "@mui/material";
 import {
   ShoppingBasket,
@@ -25,6 +26,7 @@ import {
 } from "@mui/icons-material";
 import Navigation from "./NavigationHeader";
 import { useDebounce } from "../hooks/debounce";
+import { useAppSelector } from "../hooks/redux";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -84,6 +86,15 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuHandlerOpen = Boolean(anchorEl);
   const debounced = useDebounce(search);
+  const { products: compProducts } = useAppSelector(
+    (state) => state.comparisonReducer
+  );
+  const { products: cartProducts } = useAppSelector(
+    (state) => state.productCartReducer
+  );
+  const { products: likedProducts } = useAppSelector(
+    (state) => state.productLikedReducer
+  );
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -149,15 +160,21 @@ export default function Header() {
             />
           </SearchInput>
           <IconButton sx={{ color: "white" }}>
-            <SyncAltRounded></SyncAltRounded>
+            <Badge badgeContent={compProducts.length} color="error">
+              <SyncAltRounded />
+            </Badge>
           </IconButton>
           <StyledDivider orientation="vertical" variant="middle" flexItem />
           <IconButton sx={{ color: "white" }}>
-            <FavoriteBorderRounded></FavoriteBorderRounded>
+            <Badge badgeContent={likedProducts.length} color="error">
+              <FavoriteBorderRounded />
+            </Badge>
           </IconButton>
           <StyledDivider orientation="vertical" variant="middle" flexItem />
           <IconButton sx={{ color: "white" }}>
-            <ShoppingBasket>Корзина</ShoppingBasket>
+            <Badge badgeContent={cartProducts.length} color="error">
+              <ShoppingBasket />
+            </Badge>
           </IconButton>
         </Toolbar>
       </Container>

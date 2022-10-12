@@ -1,6 +1,8 @@
 import comparisonReducer from "./reducers/comparisonSlicer";
 import productCartReducer from "./reducers/productCartSlicer";
 import productReducer from "./reducers/productSlicer";
+import productLikedReducer from "./reducers/productLikedSlicer";
+
 import { rtqApi } from "../api/rtq.api";
 import {
   combineReducers,
@@ -12,6 +14,7 @@ const rootReducer = combineReducers({
   comparisonReducer,
   productCartReducer,
   productReducer,
+  productLikedReducer,
   [rtqApi.reducerPath]: rtqApi.reducer
 });
 

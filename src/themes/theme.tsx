@@ -7,7 +7,7 @@ export const themeComfy = createTheme({
       main: "#69B12A"
     },
     secondary: {
-      main: "#589624"
+      main: "#EDEDED"
     },
     info: {
       main: "rgba(88,150,36,0.67)"
