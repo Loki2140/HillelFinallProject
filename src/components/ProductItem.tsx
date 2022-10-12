@@ -44,17 +44,16 @@ export default function ProductItem({
   const dispatch = useAppDispatch();
 
   const handelerOnClick = () => {
-    return dispatch(
-      addToCart({
-        id,
-        category,
-        description,
-        rating,
-        image,
-        price,
-        title
-      })
-    );
+    const product = {
+      id,
+      category,
+      description,
+      rating,
+      image,
+      price,
+      title
+    };
+    dispatch(addToCart(product));
   };
 
   return (
@@ -89,7 +88,7 @@ export default function ProductItem({
             sx={{ border: `1px solid #69B12A` }}
             variant="outlined"
             size="large"
-            onClick={handelerOnClick()}
+            onClick={() => handelerOnClick()}
           >
             Добавить в корзину
           </StyledButton>

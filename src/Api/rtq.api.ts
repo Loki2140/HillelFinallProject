@@ -1,6 +1,5 @@
 import { IProduct } from "../models/IProduct";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { apiMok } from "../configs/configs.js";
 import { fakeStoreApi } from "../configs/configs.js";
 
 export interface ICartProduct {

@@ -1,12 +1,17 @@
 import { IProduct } from "./../../models/IProduct";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProductCollection } from "../../models/IProductCollection";
+import { IProductCollectionCart } from "../../models/IProductCollectionCart";
+import { ICartProduct } from "../../models/IProductCollectionCart";
 
-const initialState: IProductCollection = {
-  products: [],
+const initialState: IProductCollectionCart = {
+  products: localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems") || "[]")
+    : [],
   isLoading: false,
   error: "",
-  tottalSum: 0
+  tottalSum: localStorage.getItem("cartTottalSum")
+    ? JSON.parse(localStorage.getItem("cartTottalSum") || "0")
+    : 0
 };
 
 export const productCartSlicer = createSlice({
@@ -14,22 +19,63 @@ export const productCartSlicer = createSlice({
   initialState,
   reducers: {
     removeFromCart(state, action: PayloadAction<number>) {
+      const findProduct = state.products.find(
+        (product) => product.id === action.payload
+      );
+      if (findProduct) {
+        findProduct.inCart--;
+      }
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
-      state.tottalSum = sum(state.products);
+      state.tottalSum = calcTotalPrice(state.products);
+      localStorage.setItem("cartItems", JSON.stringify(state.products));
+      localStorage.setItem("cartTottalSum", JSON.stringify(state.tottalSum));
     },
     addToCart(state, action: PayloadAction<IProduct>) {
-      state.products.push(action.payload);
-      state.tottalSum = sum(state.products);
+      const findProduct = state.products.find(
+        (product) => product.id === action.payload.id
+      );
+      if (findProduct) {
+        findProduct.inCart++;
+      } else {
+        state.products.push({
+          ...action.payload,
+          inCart: 1
+        });
+      }
+      state.tottalSum = calcTotalPrice(state.products);
+      localStorage.setItem("cartItems", JSON.stringify(state.products));
+      localStorage.setItem("cartTottalSum", JSON.stringify(state.tottalSum));
+    },
+    clearCart(state, action: PayloadAction) {
+      state.products = [];
+      state.tottalSum = calcTotalPrice(state.products);
+      localStorage.setItem("cartItems", JSON.stringify(state.products));
+      localStorage.setItem("cartTottalSum", JSON.stringify(state.tottalSum));
     }
   }
 });
 export default productCartSlicer.reducer;
 
-const sum = (data: Array<IProduct>) => {
-  let arr = data.map((el) => el.price);
+const calcTotalPrice = (data: Array<ICartProduct>) => {
   return Number(
-    arr.reduce((pval: number, cval: number) => pval + cval).toFixed(2)
+    data
+      .reduce(
+        (sum: number, obj: ICartProduct) => obj.price * obj.inCart + sum,
+        0
+      )
+      .toFixed(2)
   );
 };
+
+const increment = (number: number) => {
+  return number + 1;
+};
+const decriment = (number: number) => {
+  return number - 1;
+};
+// state.products. = {
+//   ...state.cartItems[existingIndex],
+//   cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
+// };

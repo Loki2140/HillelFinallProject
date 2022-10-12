@@ -1,3 +1,5 @@
+// Не используються в проєкте, просто типизация
+
 export interface api {
   url: string;
   method?: string;
