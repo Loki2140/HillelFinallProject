@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { CircularProgress, Container, Grid } from "@mui/material";
 import React, { FC, ReactElement, ReactNode, useEffect } from "react";
 import { useFetchProductsCategoryQuery } from "../api/rtq.api";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -9,15 +9,40 @@ export default function ProductList() {
   const { menuPage = "electronics" } = useAppSelector(
     (state) => state.productReducer
   );
+  const { searchState } = useAppSelector((state) => state.productReducer);
   const { isLoading, data, isError, error } =
     useFetchProductsCategoryQuery(menuPage);
+
+  const filterList = () => {
+    let newData = data?.filter((product: IProduct) => {
+      if (searchState === "") return product;
+      return (
+        searchState &&
+        product.title.toLowerCase().includes(searchState.toLowerCase())
+      );
+    });
+    return newData;
+  };
 
   return (
     <Container maxWidth="xl" sx={{ marginTop: "20px" }}>
       {isError && <div>Ошибка! В листе!</div>}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "100vh" }}
+        >
+          <Grid item xs={3}>
+            <CircularProgress />
+          </Grid>
+        </Grid>
+      )}
       <Grid container spacing={5}>
-        {data?.map((product: IProduct) => (
+        {filterList()?.map((product: IProduct) => (
           <ProductItem
             key={product.id}
             id={product.id}

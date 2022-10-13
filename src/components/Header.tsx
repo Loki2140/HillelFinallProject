@@ -1,8 +1,8 @@
 import React, {
   useState,
   MouseEvent,
-  useEffect,
-  ChangeEventHandler
+  ChangeEventHandler,
+  useEffect
 } from "react";
 import {
   Container,
@@ -26,7 +26,8 @@ import {
 } from "@mui/icons-material";
 import Navigation from "./NavigationHeader";
 import { useDebounce } from "../hooks/debounce";
-import { useAppSelector } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { productSlicer } from "../store/reducers/productSlicer";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -95,6 +96,12 @@ export default function Header() {
   const { products: likedProducts } = useAppSelector(
     (state) => state.productLikedReducer
   );
+  const { changeSearchState } = productSlicer.actions;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(changeSearchState(debounced));
+  }, [debounced, changeSearchState, dispatch]);
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

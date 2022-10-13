@@ -1,5 +1,5 @@
 import React from "react";
 
-function ProductsComparison(params: any) {
+export default function ProductsComparison(params: any) {
   return <></>;
 }

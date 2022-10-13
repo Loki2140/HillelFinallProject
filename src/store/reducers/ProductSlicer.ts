@@ -6,7 +6,8 @@ const initialState: IProductCollection = {
   products: [],
   isLoading: false,
   error: "",
-  menuPage: "electronics"
+  menuPage: "electronics",
+  searchState: ""
 };
 
 export const productSlicer = createSlice({
@@ -23,6 +24,9 @@ export const productSlicer = createSlice({
     },
     changeMenuPage(state, action: PayloadAction<string>) {
       state.menuPage = action.payload;
+    },
+    changeSearchState(state, action: PayloadAction<string>) {
+      state.searchState = action.payload;
     }
   }
 });

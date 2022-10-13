@@ -6,4 +6,5 @@ export interface IProductCollection {
   error: string;
   menuPage?: string;
   tottalSum?: number;
+  searchState?: string;
 }
