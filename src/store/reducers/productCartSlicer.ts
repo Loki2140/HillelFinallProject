@@ -2,6 +2,7 @@ import { IProduct } from "./../../models/IProduct";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProductCollectionCart } from "../../models/IProductCollectionCart";
 import { ICartProduct } from "../../models/IProductCollectionCart";
+import { toast } from "react-toastify";
 
 const initialState: IProductCollectionCart = {
   products: localStorage.getItem("cartItems")
@@ -47,6 +48,9 @@ export const productCartSlicer = createSlice({
       );
       if (findProduct) {
         findProduct.inCart++;
+        toast.success("Product added to cart", {
+          position: "bottom-left"
+        });
       } else {
         state.products.push({
           ...action.payload,

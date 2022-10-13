@@ -1,7 +1,8 @@
 import React, { FC, MouseEvent } from "react";
 import { MenuItem, Paper, MenuList, Box } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { useAppDispatch } from "../hooks/redux";
 import { productSlicer } from "../store/reducers/productSlicer";
+import { Link } from "react-router-dom";
 
 export default function NavigationHeader() {
   const { changeMenuPage } = productSlicer.actions;
@@ -16,10 +17,18 @@ export default function NavigationHeader() {
     <Box sx={{ display: "flex" }}>
       <Paper>
         <MenuList onClick={(e) => handelerOnClick(e)}>
-          <MenuItem data-category="electronics">Электроника</MenuItem>
-          <MenuItem data-category="jewelery">Укращения</MenuItem>
-          <MenuItem data-category="men's clothing">Для Него</MenuItem>
-          <MenuItem data-category="women's clothing">Для Нее</MenuItem>
+          <MenuItem component={Link} to={"/"} data-category="electronics">
+            Электроника
+          </MenuItem>
+          <MenuItem component={Link} to={"/"} data-category="jewelery">
+            Укращения
+          </MenuItem>
+          <MenuItem component={Link} to={"/"} data-category="men's clothing">
+            Для Него
+          </MenuItem>
+          <MenuItem component={Link} to={"/"} data-category="women's clothing">
+            Для Нее
+          </MenuItem>
         </MenuList>
       </Paper>
     </Box>

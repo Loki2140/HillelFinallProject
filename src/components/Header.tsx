@@ -28,6 +28,7 @@ import Navigation from "./NavigationHeader";
 import { useDebounce } from "../hooks/debounce";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { productSlicer } from "../store/reducers/productSlicer";
+import { Link } from "react-router-dom";
 
 const SearchInput = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,7 +60,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "white",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -79,7 +79,9 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
 }));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main
+  backgroundColor: theme.palette.primary.main,
+  display: "flex"
+  // width: "100vw"
 }));
 
 export default function Header() {
@@ -166,23 +168,29 @@ export default function Header() {
               sx={{ width: "100%" }}
             />
           </SearchInput>
-          <IconButton sx={{ color: "white" }}>
-            <Badge badgeContent={compProducts.length} color="error">
-              <SyncAltRounded />
-            </Badge>
-          </IconButton>
+          <Link to="/productsComparison">
+            <IconButton sx={{ color: "white" }}>
+              <Badge badgeContent={compProducts.length} color="error">
+                <SyncAltRounded />
+              </Badge>
+            </IconButton>
+          </Link>
           <StyledDivider orientation="vertical" variant="middle" flexItem />
-          <IconButton sx={{ color: "white" }}>
-            <Badge badgeContent={likedProducts.length} color="error">
-              <FavoriteBorderRounded />
-            </Badge>
-          </IconButton>
+          <Link to="/productsLiked">
+            <IconButton sx={{ color: "white" }}>
+              <Badge badgeContent={likedProducts.length} color="error">
+                <FavoriteBorderRounded />
+              </Badge>
+            </IconButton>
+          </Link>
           <StyledDivider orientation="vertical" variant="middle" flexItem />
-          <IconButton sx={{ color: "white" }}>
-            <Badge badgeContent={cartProducts.length} color="error">
-              <ShoppingBasket />
-            </Badge>
-          </IconButton>
+          <Link to="/productsCart">
+            <IconButton sx={{ color: "white" }}>
+              <Badge badgeContent={cartProducts.length} color="error">
+                <ShoppingBasket />
+              </Badge>
+            </IconButton>
+          </Link>
         </Toolbar>
       </Container>
     </StyledAppBar>
