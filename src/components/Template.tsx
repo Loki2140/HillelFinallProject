@@ -1,5 +1,5 @@
 import React from "react";
 
-function ProductMenu(params: any) {
+export default function NAME() {
   return <></>;
 }

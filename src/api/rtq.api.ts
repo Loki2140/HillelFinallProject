@@ -27,6 +27,11 @@ export const rtqApi = createApi({
         url: `products/category/${category}`
       })
     }),
+    fetchProduct: build.query<IProduct, number | string>({
+      query: (id) => ({
+        url: `products/${id}`
+      })
+    }),
     fetchProductsCart: build.query<Array<ICart>, string | number>({
       query: (id) => ({
         url: `carts/${id}`
@@ -41,5 +46,8 @@ export const rtqApi = createApi({
     })
   })
 });
-
-export const { useFetchProductsQuery, useFetchProductsCategoryQuery } = rtqApi;
+export const {
+  useFetchProductsQuery,
+  useFetchProductsCategoryQuery,
+  useFetchProductQuery
+} = rtqApi;

@@ -1,17 +1,16 @@
+import React from "react";
 import { CircularProgress, Container, Grid } from "@mui/material";
-import React, { FC, ReactElement, ReactNode, useEffect } from "react";
-import { useFetchProductsCategoryQuery } from "../api/rtq.api";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { IProduct } from "../models/IProduct";
-import ProductItem from "./ProductItem";
+import { useFetchProductsCategoryQuery } from "../../api/rtq.api";
+import { useAppSelector } from "../../hooks/redux";
+import { IProduct } from "../../models/IProduct";
+import ProductItem from "./ProductItem/ProductItem";
 
 export default function ProductList() {
   const { menuPage = "electronics" } = useAppSelector(
     (state) => state.productReducer
   );
   const { searchState } = useAppSelector((state) => state.productReducer);
-  const { isLoading, data, isError, error } =
-    useFetchProductsCategoryQuery(menuPage);
+  const { isLoading, data, isError } = useFetchProductsCategoryQuery(menuPage);
 
   const filterList = () => {
     let newData = data?.filter((product: IProduct) => {
@@ -25,7 +24,7 @@ export default function ProductList() {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ marginTop: "20px" }}>
+    <Container maxWidth="xl" sx={{ marginTop: "40px", marginBottom: "40px" }}>
       {isError && <div>Ошибка! В листе!</div>}
       {isLoading && (
         <Grid
@@ -41,20 +40,13 @@ export default function ProductList() {
           </Grid>
         </Grid>
       )}
-      <Grid container spacing={5}>
-        {filterList()?.map((product: IProduct) => (
-          <ProductItem
-            key={product.id}
-            id={product.id}
-            description={product.description}
-            title={product.title}
-            price={product.price}
-            category={product.category}
-            image={product.image}
-            rating={product.rating}
-          />
-        ))}
-      </Grid>
+      {!isLoading && (
+        <Grid container spacing={5}>
+          {filterList()?.map((product: IProduct) => (
+            <ProductItem key={product.id} product={product} />
+          ))}
+        </Grid>
+      )}
     </Container>
   );
 }

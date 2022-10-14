@@ -1,6 +1,5 @@
 import React from "react";
 import { styled, Typography } from "@mui/material";
-import { FunctionExpression } from "typescript";
 
 const StyledFooter = styled("footer")(({ theme }) => ({
   color: "white",

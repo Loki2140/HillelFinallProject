@@ -2,7 +2,7 @@ import React from "react";
 import { Container, IconButton, List, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { productLikedSlicer } from "../store/reducers/productLikedSlicer";
-import ProductLikedItem from "../components/ProductLikedItem";
+import ProductLikedItem from "../components/ProductLikedItem/ProductLikedItem";
 
 export default function ProductsLiked() {
   const { products, isLoading, error } = useAppSelector(

@@ -11,9 +11,9 @@ import {
   Typography
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { productCartSlicer } from "../store/reducers/productCartSlicer";
-import { ICartProduct } from "../models/IProductCollectionCart";
+import { useAppDispatch } from "../../hooks/redux";
+import { productCartSlicer } from "../../store/reducers/productCartSlicer";
+import { ICartProduct } from "../../models/IProductCollectionCart";
 import {
   ArrowDropUp as ArrowDropUpIcon,
   ArrowDropDown as ArrowDropDownIcon

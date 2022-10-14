@@ -23,6 +23,8 @@ export const productCartSlicer = createSlice({
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
+      toast.info("Вы убрали товар из корзины!");
+
       state.tottalSum = calcTotalPrice(state.products);
       localStorage.setItem("cartItems", JSON.stringify(state.products));
       localStorage.setItem("cartTottalSum", JSON.stringify(state.tottalSum));
@@ -33,10 +35,12 @@ export const productCartSlicer = createSlice({
       );
       if (findProduct && findProduct.inCart > 1) {
         findProduct.inCart--;
+        toast.success("Товар убран из корзины!");
       } else {
         state.products = state.products.filter(
           (product) => product.id !== action.payload
         );
+        toast.info("Вы убрали товар из корзины!");
       }
       state.tottalSum = calcTotalPrice(state.products);
       localStorage.setItem("cartItems", JSON.stringify(state.products));
@@ -48,14 +52,13 @@ export const productCartSlicer = createSlice({
       );
       if (findProduct) {
         findProduct.inCart++;
-        toast.success("Product added to cart", {
-          position: "bottom-left"
-        });
+        toast.info("Вы добавили ЕЩЕ один товар в корзину!");
       } else {
         state.products.push({
           ...action.payload,
           inCart: 1
         });
+        toast.success("Товар добавлен в корзину!");
       }
       state.tottalSum = calcTotalPrice(state.products);
       localStorage.setItem("cartItems", JSON.stringify(state.products));
@@ -64,6 +67,7 @@ export const productCartSlicer = createSlice({
     clearCart(state, action: PayloadAction) {
       state.products = [];
       state.tottalSum = calcTotalPrice(state.products);
+      toast.error("Корзина пуста!");
       localStorage.setItem("cartItems", JSON.stringify(state.products));
       localStorage.setItem("cartTottalSum", JSON.stringify(state.tottalSum));
     }

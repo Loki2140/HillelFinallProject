@@ -9,7 +9,7 @@ import {
 import { Delete as DeleteIcon } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { productCartSlicer } from "../store/reducers/productCartSlicer";
-import ProductCartItem from "../components/ProductCartItem";
+import ProductCartItem from "../components/ProductCartItem/ProductCartItem";
 
 export default function ProductsCart() {
   const { products, isLoading, error, tottalSum } = useAppSelector(
@@ -18,7 +18,6 @@ export default function ProductsCart() {
   const { clearCart } = productCartSlicer.actions;
   const dispatch = useAppDispatch();
 
- 
   const handelerOnClickDeleteAll = () => {
     dispatch(clearCart());
   };

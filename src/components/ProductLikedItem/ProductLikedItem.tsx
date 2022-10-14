@@ -11,11 +11,10 @@ import {
   Delete as DeleteIcon,
   AddShoppingCart as AddShoppingCartIcon
 } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { productLikedSlicer } from "../store/reducers/productLikedSlicer";
-import { IProduct } from "../models/IProduct";
-import { ICartProduct } from "../models/IProductCollectionCart";
-import { productCartSlicer } from "../store/reducers/productCartSlicer";
+import { useAppDispatch } from "../../hooks/redux";
+import { productLikedSlicer } from "../../store/reducers/productLikedSlicer";
+import { IProduct } from "../../models/IProduct";
+import { productCartSlicer } from "../../store/reducers/productCartSlicer";
 
 interface LikedItem {
   product: IProduct;

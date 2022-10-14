@@ -1,10 +1,10 @@
-import React, { FC, MouseEvent } from "react";
+import React, { MouseEvent } from "react";
 import { MenuItem, Paper, MenuList, Box } from "@mui/material";
-import { useAppDispatch } from "../hooks/redux";
-import { productSlicer } from "../store/reducers/productSlicer";
+import { useAppDispatch } from "../../../hooks/redux";
+import { productSlicer } from "../../../store/reducers/productSlicer";
 import { Link } from "react-router-dom";
 
-export default function NavigationHeader() {
+export default function TopRightMenu() {
   const { changeMenuPage } = productSlicer.actions;
   const dispatch = useAppDispatch();
 
