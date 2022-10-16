@@ -1,7 +1,6 @@
 // Фактически не реализован, тк основной список не фетчится в стор, а сохраняется в стор RTQ
 //Данный стор можно считать глобальным. В нем хранится свойство поиска, и вкладки для RTQ запросов на сервер.
 
-import { IProduct } from "../../models/IProduct";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProductCollection } from "../../models/IProductCollection";
 

@@ -85,14 +85,3 @@ const calcTotalPrice = (data: Array<ICartProduct>) => {
       .toFixed(2)
   );
 };
-
-const increment = (number: number) => {
-  return number + 1;
-};
-const decriment = (number: number) => {
-  return number - 1;
-};
-// state.products. = {
-//   ...state.cartItems[existingIndex],
-//   cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
-// };

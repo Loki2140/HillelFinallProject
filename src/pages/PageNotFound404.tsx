@@ -1,4 +1,4 @@
-import { alpha, Box, Divider, styled, Typography } from "@mui/material";
+import { alpha, Box, styled, Typography } from "@mui/material";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   display: "flex",
